@@ -1,4 +1,4 @@
-- name: Create Azure VM
+- name: Delete Azure demo environment
   hosts: localhost
   connection: local
   vars:
