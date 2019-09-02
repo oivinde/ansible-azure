@@ -1,0 +1,12 @@
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  vars:
+    resource_group: demo
+
+  tasks:
+  - name: Delete the demo resource group
+    azure_rm_resourcegroup:
+      name: "{{ resource_group }}"
+      force_delete_nonempty: yes
+      state: absent
