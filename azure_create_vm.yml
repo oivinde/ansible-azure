@@ -5,6 +5,10 @@
     resource_group: demo
     location: northeurope
     vm_name: demo-vm
+    vm_size: Standard_B1ms
+    admin_username: demouser
+    ssh_pub_key:
+    image: rhel8-golden-image
 
   tasks:
   - name: Create the resource group
@@ -62,3 +66,16 @@
       subnet: default
       public_ip_name: "{{ vm_name }}-ip"
       security_group: "{{ resource_group }}-nsg"
+
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: "{{ vm_name }}"
+      vm_size: "{{ vm_size }}"
+      admin_username: "{{ admin_username }}"
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: "/home/{{ admin_username }}/.ssh/authorized_keys"
+          key_data: "{{ ssh_pub_key }}"
+      network_interfaces: "{{ vm_name }}-Nic"
+      image: "{{ image }}"
