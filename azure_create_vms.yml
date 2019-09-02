@@ -104,3 +104,10 @@
   #        key_data: "{{ ssh_pub_key }}"
   #    network_interfaces: "{{ vm_name }}-Nic"
   #    image: "{{ image }}"
+- name: "[Play 2] Post Configuration of VMs"
+  hosts: just_created_vms
+
+  tasks:
+  - name: Ping VMs
+    ping:
+  
