@@ -23,3 +23,21 @@
       resource_group: "{{ resource_group }}"
       allocation_method: Static
       name: "{{ vm_name }}-ip"
+
+  - name: Create Network Security Group that allows SSH/Cockpit
+    azure_rm_securitygroup:
+      resource_group: "{{ resource_group }}"
+      name: "{{ resource_group }}-nsg"
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 101
+          direction: Inbound
+        - name: COCKPIT
+          protocol: Tcp
+          destination_port_range: 9090
+          access: Allow
+          priority: 102
+          direction: Inbound
