@@ -52,7 +52,7 @@
 
   - name: Show Public IP address
     debug:
-      msg: "{{ item.state.ip_address }}"
+      msg: "{{ item }}"
     with_items: "{{ publicip }}"
 
   #- name: Create Network Security Group that allows SSH/Cockpit
