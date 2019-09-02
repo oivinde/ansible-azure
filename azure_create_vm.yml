@@ -47,6 +47,6 @@
       resource_group: "{{ resource_group }}"
       name: "{{ vm_name }}-Nic"
       virtual_network: "{{ resource_group }}-vnet"
-      subnet: "{{ resource_group }}-vnet/default"
+      subnet: "default"
       public_ip_name: "{{ vm_name }}-ip"
       security_group: "{{ resource_group }}-nsg"
