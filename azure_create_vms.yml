@@ -57,8 +57,8 @@
 
   - name: Show Public IP address
     debug:
-      msg: "{{ item }}"
-    with_items: "{{ output_ip_address.ansible_facts }}"
+      msg: "{{ item.ansible_facts }}"
+    with_items: "{{ output_ip_address }}"
 
   #- name: Create Network Security Group that allows SSH/Cockpit
   #  azure_rm_securitygroup:
