@@ -50,9 +50,10 @@
     delay: 4
     with_items: "{{ publicip.results }}"
 
-  #- name: Show Public IP address
-  #  debug:
-  #    msg: "{{ publicip.state.ip_address }}"
+  - name: Show Public IP address
+    debug:
+      msg: "{{ item.state.ip_address }}"
+    with_items: "{{ publicip }}"
 
   #- name: Create Network Security Group that allows SSH/Cockpit
   #  azure_rm_securitygroup:
