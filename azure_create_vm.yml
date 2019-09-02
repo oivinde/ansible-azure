@@ -21,7 +21,7 @@
   - name: Add subnet
     azure_rm_subnet:
       resource_group: "{{ resource_group }}"
-      name: "{{ resource_group }}-snet"
+      name: default
       address_prefix: "10.0.1.0/24"
       virtual_network: "{{ resource_group }}-vnet"
 
@@ -59,6 +59,6 @@
       resource_group: "{{ resource_group }}"
       name: "{{ vm_name }}-Nic"
       virtual_network: "{{ resource_group }}-vnet"
-      subnet: "{{ resource_group }}-snet"
+      subnet: default
       public_ip_name: "{{ vm_name }}-ip"
       security_group: "{{ resource_group }}-nsg"
