@@ -2,11 +2,18 @@
   hosts: localhost
   connection: local
   vars:
-    resource_group: test
+    resource_group: demo
     location: northeurope
+    vm_name: demo-vm
 
   tasks:
   - name: Create the resource group
     azure_rm_resourcegroup:
       name: "{{ resource_group }}"
       location: "{{ location }}"
+
+  - name: Create virtual network
+    azure_rm_virtualnetwork:
+      resource_group: "{{ resource_group }}"
+      name: "{{ resource_group }}"
+      address_prefixes: "10.1.0.0/24"
