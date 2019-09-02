@@ -50,10 +50,15 @@
     delay: 4
     with_items: "{{ publicip.results }}"
 
+  - name: Get facts for all Public IPs
+    azure_rm_publicipaddress_facts:
+      resource_group: "{{ resource_group }}"
+    register: output_ip_address
+
   - name: Show Public IP address
     debug:
       msg: "{{ item }}"
-    with_items: "{{ publicip.results }}"
+    with_items: "{{ output_ip_address }}"
 
   #- name: Create Network Security Group that allows SSH/Cockpit
   #  azure_rm_securitygroup:
