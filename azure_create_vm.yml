@@ -1,0 +1,12 @@
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  vars:
+    resource_group: test
+    location: northeurope
+
+  tasks:
+  - name: Create the resource group
+    azure_rm_resourcegroup:
+      name: "{{ resource_group }}"
+      location: "{{ location }}"
