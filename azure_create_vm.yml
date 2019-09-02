@@ -41,3 +41,11 @@
           access: Allow
           priority: 102
           direction: Inbound
+
+  - name: Create virtual network inteface card
+    azure_rm_networkinterface:
+      resource_group: "{{ resource_group }}"
+      name: "{{ vm_name }}-Nic"
+      virtual_network: "{{ resource_group }}-vnet"
+      public_ip_name: "{{ vm_name }}-ip"
+      security_group: "{{ resource_group }}-nsg"
