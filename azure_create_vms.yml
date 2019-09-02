@@ -49,9 +49,6 @@
     retries: 500
     delay: 4
     with_items: "{{ publicip.results }}"
-    when: item.ansible_job_id is defined
-    loop_control:
-      label: "{{ item._ansible_item_label }}"
 
   #- name: Show Public IP address
   #  debug:
