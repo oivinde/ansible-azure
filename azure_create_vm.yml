@@ -17,3 +17,9 @@
       resource_group: "{{ resource_group }}"
       name: "{{ resource_group }}-vnet"
       address_prefixes: "10.1.0.0/24"
+
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: "{{ resource_group }}"
+      allocation_method: Static
+      name: "{{ vm_name }}-ip"
