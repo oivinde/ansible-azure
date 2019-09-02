@@ -60,6 +60,11 @@
       msg: "{{ item.properties.ipAddress }}"
     with_items: "{{ output_ip_address.ansible_facts.azure_publicipaddresses }}"
 
+  - name: Setup in-memory inventory
+    add_host:
+      hostname: "{{ item.properties.ipAddress }}"
+      groups: just_created_vms
+    with_items: "{{ output_ip_address.ansible_facts.azure_publicipaddresses }}"
   #- name: Create Network Security Group that allows SSH/Cockpit
   #  azure_rm_securitygroup:
   #    resource_group: "{{ resource_group }}"
