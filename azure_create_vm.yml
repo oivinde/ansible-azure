@@ -15,5 +15,5 @@
   - name: Create virtual network
     azure_rm_virtualnetwork:
       resource_group: "{{ resource_group }}"
-      name: "{{ resource_group }}"
+      name: "{{ resource_group }}"-vnet
       address_prefixes: "10.1.0.0/24"
