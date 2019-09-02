@@ -34,7 +34,7 @@
 
   - name: Show Public IP address
     debug:
-      msg: "{{ publicip }}"
+      msg: "{{ publicip.ip_address }}"
 
   - name: Create Network Security Group that allows SSH/Cockpit
     azure_rm_securitygroup:
