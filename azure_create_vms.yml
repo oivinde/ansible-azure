@@ -123,7 +123,7 @@
     poll: 0
     register: vm
 
-  - name: "Check Nic Created"
+  - name: "Check VM Created"
     async_status:
       jid: "{{ item.ansible_job_id }}"
     register: vm_status
@@ -134,7 +134,8 @@
 
 - name: "[Play 2] Post Configuration of VMs"
   hosts: just_created_vms
+  become: true
 
   tasks:
-  - name: Ping VMs
-    ping:
+  - include_role:
+      name: ansible-role-rhel-cloud-postconf
