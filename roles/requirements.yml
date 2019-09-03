@@ -1,3 +1,5 @@
 - src: https://github.com/pgustafs/ansible-role-rhel-cloud-postconf.git
   scm: git
+- src: https://github.com/pgustafs/ansible-role-openscap.git
+  scm: git
 - redhatinsights.insights-client
