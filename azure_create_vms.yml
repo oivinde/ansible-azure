@@ -135,6 +135,10 @@
 - name: "[Play 2] Post Configuration of VMs"
   hosts: just_created_vms
   become: true
+  vars:
+    rhel_cloud_postconf_rhsm_username: "{{ rhsm_username }}"
+    rhel_cloud_postconf_rhsm_password: "{{ rhsm_password }}"
+    rhel_cloud_postconf_rhsm_pool_id: "{{ rhsm_pool_id }}"
 
   tasks:
   - include_role:
