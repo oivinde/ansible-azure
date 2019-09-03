@@ -146,3 +146,6 @@
 
   - include_role:
       name: redhatinsights.insights-client
+
+  - include_role:
+      name: ansible-role-openscap
