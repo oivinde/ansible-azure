@@ -105,18 +105,33 @@
     retries: 500
     delay: 4
     with_items: "{{ nic.results }}"
-  #- name: Create VM
-  #  azure_rm_virtualmachine:
-  #    resource_group: "{{ resource_group }}"
-  #    name: "{{ vm_name }}"
-  #    vm_size: "{{ vm_size }}"
-  #    admin_username: "{{ admin_username }}"
-  #    ssh_password_enabled: false
-  #    ssh_public_keys:
-  #      - path: "/home/{{ admin_username }}/.ssh/authorized_keys"
-  #        key_data: "{{ ssh_pub_key }}"
-  #    network_interfaces: "{{ vm_name }}-Nic"
-  #    image: "{{ image }}"
+
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: "{{ vm_prefix }}{{ item }}"
+      vm_size: "{{ vm_size }}"
+      admin_username: "{{ admin_username }}"
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: "/home/{{ admin_username }}/.ssh/authorized_keys"
+          key_data: "{{ ssh_pub_key }}"
+      network_interfaces: "{{ vm_prefix }}{{ item }}-Nic"
+      image: "{{ image }}"
+    with_sequence: start=1 end={{num_vm|int}}
+    async: 1000
+    poll: 0
+    register: vm
+
+  - name: "Check Nic Created"
+    async_status:
+      jid: "{{ item.ansible_job_id }}"
+    register: vm_status
+    until: vm_status.finished
+    retries: 500
+    delay: 4
+    with_items: "{{ vm.results }}"
+
 - name: "[Play 2] Post Configuration of VMs"
   hosts: just_created_vms
 
