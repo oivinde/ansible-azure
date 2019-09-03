@@ -65,33 +65,46 @@
       hostname: "{{ item.properties.ipAddress }}"
       groups: just_created_vms
     with_items: "{{ output_ip_address.ansible_facts.azure_publicipaddresses }}"
-  #- name: Create Network Security Group that allows SSH/Cockpit
-  #  azure_rm_securitygroup:
-  #    resource_group: "{{ resource_group }}"
-  #    name: "{{ resource_group }}-nsg"
-  #    rules:
-  #      - name: SSH
-  #        protocol: Tcp
-  #        destination_port_range: 22
-  #        access: Allow
-  #        priority: 101
-  #        direction: Inbound
-  #      - name: COCKPIT
-  #        protocol: Tcp
-  #        destination_port_range: 9090
-  #        access: Allow
-  #        priority: 102
-  #        direction: Inbound
 
-  #- name: Create virtual network inteface card
-  #  azure_rm_networkinterface:
-  #    resource_group: "{{ resource_group }}"
-  #    name: "{{ vm_name }}-Nic"
-  #    virtual_network: "{{ resource_group }}-vnet"
-  #    subnet: default
-  #    public_ip_name: "{{ vm_name }}-ip"
-  #    security_group: "{{ resource_group }}-nsg"
+  - name: Create Network Security Group that allows SSH/Cockpit
+    azure_rm_securitygroup:
+      resource_group: "{{ resource_group }}"
+      name: "{{ resource_group }}-nsg"
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 101
+          direction: Inbound
+        - name: COCKPIT
+          protocol: Tcp
+          destination_port_range: 9090
+          access: Allow
+          priority: 102
+          direction: Inbound
 
+  - name: Create virtual network inteface card
+    azure_rm_networkinterface:
+      resource_group: "{{ resource_group }}"
+      name: "{{ vm_prefix }}{{ item }}-Nic"
+      virtual_network: "{{ resource_group }}-vnet"
+      subnet: default
+      public_ip_name: "{{ vm_prefix }}{{ item }}-pubip"
+      security_group: "{{ resource_group }}-nsg"
+    with_sequence: start=1 end={{num_vm|int}}
+    async: 1000
+    poll: 0
+    register: nic
+
+  - name: "Check Nic Created"
+    async_status:
+      jid: "{{ item.ansible_job_id }}"
+    register: nic_status
+    until: nic_status.finished
+    retries: 500
+    delay: 4
+    with_items: "{{ nic.results }}"
   #- name: Create VM
   #  azure_rm_virtualmachine:
   #    resource_group: "{{ resource_group }}"
@@ -110,4 +123,3 @@
   tasks:
   - name: Ping VMs
     ping:
-  
