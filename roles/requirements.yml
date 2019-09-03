@@ -1,2 +1,3 @@
 - src: https://github.com/pgustafs/ansible-role-rhel-cloud-postconf.git
   scm: git
+- redhatinsights.insights-client

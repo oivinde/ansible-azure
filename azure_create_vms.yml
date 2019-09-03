@@ -143,3 +143,6 @@
   tasks:
   - include_role:
       name: ansible-role-rhel-cloud-postconf
+
+  - include_role:
+      name: redhatinsights.insights-client
