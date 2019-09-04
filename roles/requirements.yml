@@ -1,4 +1,4 @@
-- src: https://github.com/pgustafs/ansible-role-rhel-cloud-postconf.git
+- src: https://github.com/pgustafs/ansible-role-rhsm.git
   scm: git
 - src: https://github.com/pgustafs/ansible-role-openscap.git
   scm: git
