@@ -136,13 +136,10 @@
   hosts: just_created_vms
   become: true
   vars:
-    rhel_cloud_postconf_rhsm_username: "{{ rhsm_username }}"
-    rhel_cloud_postconf_rhsm_password: "{{ rhsm_password }}"
-    rhel_cloud_postconf_rhsm_pool_id: "{{ rhsm_pool_id }}"
 
   tasks:
   - include_role:
-      name: ansible-role-rhel-cloud-postconf
+      name: ansible-role-rhsm
 
   - include_role:
       name: redhatinsights.insights-client
