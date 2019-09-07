@@ -14,6 +14,10 @@
     num_vm: 2
 
   tasks:
+  - name: try to set a unique storageaccount name
+    set_fact:
+      storageaccount_name: "{{ resource_group }}{{ 10000000 |random}}"
+
   - name: Create the resource group
     azure_rm_resourcegroup:
       name: "{{ resource_group }}"
@@ -22,7 +26,7 @@
   - name: Create a storage account
     azure_rm_storageaccount:
       resource_group: "{{ resource_group }}"
-      name: "{{ resource_group }}storageact"
+      name: "{{ storageaccount_name }}"
       type: "{{ storage_type }}"
 
   - name: Create virtual network
@@ -118,7 +122,7 @@
       resource_group: "{{ resource_group }}"
       name: "{{ vm_prefix }}{{ item }}"
       vm_size: "{{ vm_size }}"
-      storage_account_name: "{{ resource_group }}-storageaccount"
+      storage_account_name: "{{ storageaccount_name }}"
       admin_username: "{{ admin_username }}"
       ssh_password_enabled: false
       ssh_public_keys:
