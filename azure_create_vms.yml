@@ -22,7 +22,7 @@
   - name: Create a storage account
     azure_rm_storageaccount:
       resource_group: "{{ resource_group }}"
-      name: "{{ resource_group }}storage"
+      name: "{{ resource_group }}storageact"
       type: "{{ storage_type }}"
 
   - name: Create virtual network
