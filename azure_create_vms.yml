@@ -4,7 +4,7 @@
   vars:
     resource_group: demo
     location: northeurope
-    storage_type: StandardSSD_LRS
+    storage_type: Standard_LRS
     vm_name: demo-vm
     vm_size: Standard_B1ms
     admin_username: demouser
