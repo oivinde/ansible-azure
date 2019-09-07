@@ -24,7 +24,6 @@
       resource_group: "{{ resource_group }}"
       name: "{{ resource_group }}-storageaccount"
       type: "{{ storage_type }}"
-      location: "{{azure_region}}"
 
   - name: Create virtual network
     azure_rm_virtualnetwork:
