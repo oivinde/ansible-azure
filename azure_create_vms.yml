@@ -4,6 +4,7 @@
   vars:
     resource_group: demo
     location: northeurope
+    storage_type: StandardSSD_LRS
     vm_name: demo-vm
     vm_size: Standard_B1ms
     admin_username: demouser
@@ -17,6 +18,13 @@
     azure_rm_resourcegroup:
       name: "{{ resource_group }}"
       location: "{{ location }}"
+
+  - name: Create a storage account
+    azure_rm_storageaccount:
+      resource_group: "{{ resource_group }}"
+      name: "{{ resource_group }}-storageaccount"
+      type: "{{ storage_type }}"
+      location: "{{azure_region}}"
 
   - name: Create virtual network
     azure_rm_virtualnetwork:
@@ -111,6 +119,7 @@
       resource_group: "{{ resource_group }}"
       name: "{{ vm_prefix }}{{ item }}"
       vm_size: "{{ vm_size }}"
+      storage_account_name: "{{ resource_group }}-storageaccount"
       admin_username: "{{ admin_username }}"
       ssh_password_enabled: false
       ssh_public_keys:
