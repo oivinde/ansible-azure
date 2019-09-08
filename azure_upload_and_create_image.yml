@@ -46,11 +46,11 @@
       blob: "{{ image_name }}.vhd"
       blob_type: page
       content_type: "application/octet-stream"
-      src: /test/test.vhd
+      src: "{{ source_image }}"
 
   - name: Create an image from os disk
     azure_rm_image:
       resource_group: "{{ resource_group }}"
       name: "{{ image_name }}"
-      source: "https://{{ storageaccount_name }}/.blob.core.windows.net/{{ container_name }}/{{ image_name }}.vhd"
+      source: "https://{{ storageaccount_name }}.blob.core.windows.net/{{ container_name }}/{{ image_name }}.vhd"
       os_type: Linux
