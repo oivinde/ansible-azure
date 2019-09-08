@@ -1,12 +1,13 @@
 - name: Create Azure VM
   hosts: localhost
   connection: local
+  become: true
   vars:
     resource_group: customimages
     location: northeurope
     storage_type: Standard_LRS
     container_name: customimagescon
-    source_image: /tmp/test.png
+    source_image: /test/test.png
     image_name: rhel8-golden-image-test
 
   tasks:
