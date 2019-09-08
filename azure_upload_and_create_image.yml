@@ -36,6 +36,7 @@
       resource_group: "{{ resource_group }}"
       storage_account_name: "{{ storageaccount_name }}"
       container: "{{ container_name }}"
+      state: present
       blob: "{{ image_name }}.vhd"
       blob_type: page
       content_type: "application/octet-stream"
