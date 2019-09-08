@@ -6,7 +6,7 @@
     location: northeurope
     storage_type: Standard_LRS
     container_name: customimagescon
-    source_image: /tmp/ce09ba7e-ba8f-4e19-bba1-607fe7d6231c-disk.vhd
+    source_image: "./tmp/ce09ba7e-ba8f-4e19-bba1-607fe7d6231c-disk.vhd"
     image_name: rhel8-golden-image-test
 
   tasks:
