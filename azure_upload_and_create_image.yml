@@ -46,7 +46,7 @@
       blob: "{{ image_name }}.vhd"
       blob_type: page
       content_type: "application/octet-stream"
-      src: "{{ source_image }}"
+      src: /tmp/test.vhd
 
   - name: Create an image from os disk
     azure_rm_image:
