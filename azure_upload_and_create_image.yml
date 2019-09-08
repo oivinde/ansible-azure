@@ -31,12 +31,18 @@
       name: "{{ resource_group }}-vnet"
       address_prefixes: "10.0.0.0/16"
 
-  - name: Create container "{{ container_name }}" and upload image file
+  - name: Create storage container
     azure_rm_storageblob:
       resource_group: "{{ resource_group }}"
       storage_account_name: "{{ storageaccount_name }}"
       container: "{{ container_name }}"
       state: present
+
+  - name: Create container "{{ container_name }}" and upload image file
+    azure_rm_storageblob:
+      resource_group: "{{ resource_group }}"
+      storage_account_name: "{{ storageaccount_name }}"
+      container: "{{ container_name }}"
       blob: "{{ image_name }}.vhd"
       blob_type: page
       content_type: "application/octet-stream"
