@@ -1,7 +1,6 @@
 - name: Create Azure VM
   hosts: localhost
   connection: local
-  become: true
   vars:
     resource_group: customimages
     location: northeurope
