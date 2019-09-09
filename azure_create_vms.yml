@@ -5,6 +5,7 @@
     resource_group: demo
     location: northeurope
     storage_type: Standard_LRS
+    os_disk_type: StandardSSD_LRS
     vm_name: demo-vm
     vm_size: Standard_B1ms
     admin_username: demouser
@@ -122,6 +123,7 @@
       resource_group: "{{ resource_group }}"
       name: "{{ vm_prefix }}{{ item }}"
       vm_size: "{{ vm_size }}"
+      managed_disk_type: "{{ os_disk_type }}"
       storage_account_name: "{{ storageaccount_name }}"
       admin_username: "{{ admin_username }}"
       ssh_password_enabled: false
