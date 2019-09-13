@@ -1,0 +1,81 @@
+- name: Create Azure VM
+  hosts: localhost
+  connection: local
+  vars:
+    resource_group: demo
+    location: northeurope
+    vm_name: demo-vm
+    vm_size: Standard_B1ms
+    admin_username: demouser
+    ssh_pub_key:
+    image: rhel8-golden-image
+
+  tasks:
+  - name: Create the resource group
+    azure_rm_resourcegroup:
+      name: "{{ resource_group }}"
+      location: "{{ location }}"
+
+  - name: Create virtual network
+    azure_rm_virtualnetwork:
+      resource_group: "{{ resource_group }}"
+      name: "{{ resource_group }}-vnet"
+      address_prefixes: "10.0.0.0/16"
+
+  - name: Add subnet
+    azure_rm_subnet:
+      resource_group: "{{ resource_group }}"
+      name: default
+      address_prefix: "10.0.1.0/24"
+      virtual_network: "{{ resource_group }}-vnet"
+
+  - name: Create public IP address
+    azure_rm_publicipaddress:
+      resource_group: "{{ resource_group }}"
+      allocation_method: Static
+      name: "{{ vm_name }}-ip"
+    register: publicip
+
+  - name: Show Public IP address
+    debug:
+      msg: "{{ publicip.state.ip_address }}"
+
+  - name: Create Network Security Group that allows SSH/Cockpit
+    azure_rm_securitygroup:
+      resource_group: "{{ resource_group }}"
+      name: "{{ resource_group }}-nsg"
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 101
+          direction: Inbound
+        - name: COCKPIT
+          protocol: Tcp
+          destination_port_range: 9090
+          access: Allow
+          priority: 102
+          direction: Inbound
+
+  - name: Create virtual network inteface card
+    azure_rm_networkinterface:
+      resource_group: "{{ resource_group }}"
+      name: "{{ vm_name }}-Nic"
+      virtual_network: "{{ resource_group }}-vnet"
+      subnet: default
+      public_ip_name: "{{ vm_name }}-ip"
+      security_group: "{{ resource_group }}-nsg"
+
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: "{{ vm_name }}"
+      vm_size: "{{ vm_size }}"
+      admin_username: "{{ admin_username }}"
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: "/home/{{ admin_username }}/.ssh/authorized_keys"
+          key_data: "{{ ssh_pub_key }}"
+      network_interfaces: "{{ vm_name }}-Nic"
+      image: "{{ image }}"
