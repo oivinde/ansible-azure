@@ -12,3 +12,9 @@
       data:
         db_public_ip: "{{ public_ips[0] }}"
     when: azure_vm_vm_prefix == "db"
+
+  - name: make public ip var available for other playbooks
+    set_stats:
+      data:
+        lb_public_ip: "{{ public_ips[0] }}"
+    when: azure_vm_vm_prefix == "lb"
