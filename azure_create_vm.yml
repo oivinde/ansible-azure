@@ -42,4 +42,4 @@
 
   - name: Show Public IP address
     debug:
-      msg: "{{ publicip }}"
+      msg: "{{ publicip.results.state.ip_address }}"
