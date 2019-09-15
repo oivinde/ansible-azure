@@ -2,7 +2,6 @@
   hosts: localhost
   connection: local
   vars:
-    public_ip_var_name:
 
   tasks:
   - include_role:
@@ -10,4 +9,4 @@
 
   - name: make public ip var available for other playbooks
     set_stats:
-      "{{ public_ip_var_name }}": "{{ public_ips }}"
+      "{{ azure_vm_vm_prefix }}-public_ips": "{{ public_ips }}"
