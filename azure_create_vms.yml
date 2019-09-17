@@ -157,7 +157,7 @@
   - include_role:
       name: redhatinsights.insights-client
     vars:
-      insights_display_name: "{{ inventory_hostname }}"
+      insights_display_name: "{{ ansible_hostname }}"
 
   - include_role:
       name: ansible-role-openscap
