@@ -1,6 +1,6 @@
 - src: https://github.com/pgustafs/ansible-role-rhsm.git
   scm: git
-- src: https://github.com/pgustafs/ansible-role-openscap.git
+- src: https://github.com/oivinde/ansible-role-openscap.git
   scm: git
 - src: https://github.com/pgustafs/ansible-role-azure-vm.git
   scm: git
