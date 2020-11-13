@@ -6,10 +6,10 @@
     location: northeurope
     storage_type: Standard_LRS
     os_disk_type: StandardSSD_LRS
-    vm_size: Standard_B1ms
-    admin_username: demouser
+    vm_size: Standard_B1s
+    admin_username: rheldemo
     ssh_pub_key:
-    image: rhel8-golden-image
+    image: rhel8-gm
     vm_prefix: azure
     num_vm: 2
 
