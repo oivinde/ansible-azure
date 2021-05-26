@@ -1,7 +1,7 @@
-- src: https://github.com/pgustafs/ansible-role-rhsm.git
+- src: https://github.com/oivinde/ansible-role-rhsm.git
   scm: git
 - src: https://github.com/oivinde/ansible-role-openscap.git
   scm: git
-- src: https://github.com/pgustafs/ansible-role-azure-vm.git
+- src: https://github.com/oivinde/ansible-role-azure-vm.git
   scm: git
 - redhatinsights.insights-client
