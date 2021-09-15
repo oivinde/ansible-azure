@@ -4,4 +4,6 @@
   scm: git
 - src: https://github.com/oivinde/ansible-role-azure-vm.git
   scm: git
-- redhatinsights.insights-client
+- src: https://github.com/RedHatInsights/ansible-collections-insights.git
+  scm: git
+
