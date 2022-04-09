@@ -154,8 +154,8 @@
   - include_role:
       name: ansible-role-rhsm
 
-  - include_role:
-      name: ansible-collections-insights
-    vars:
-      insights_display_name: "{{ ansible_hostname }}"
+#  - include_role:
+#      name: ansible-collections-insights
+#    vars:
+#      insights_display_name: "{{ ansible_hostname }}"
 
