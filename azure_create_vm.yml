@@ -6,7 +6,7 @@
     - azure.azcollection
 
   vars:
-    resource_group: demo
+    resource_group: mssqldemo
     location: northeurope
     storage_type: Standard_LRS
     os_disk_type: StandardSSD_LRS
