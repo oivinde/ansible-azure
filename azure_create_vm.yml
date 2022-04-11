@@ -2,8 +2,8 @@
 - name: Create Azure VM
   hosts: localhost
   connection: local
-  collections:
-    - azure.azcollection
+#  collections:
+#    - azure.azcollection
 
   vars:
     resource_group: demo
