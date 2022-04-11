@@ -97,6 +97,7 @@
           key_data: "{{ ssh_pub_key }}"
       network_interfaces: "{{ name }}-nic"
       image: "{{ image }}"
+      register: vm
 
   - name: "Check VM Created"
     async_status:
