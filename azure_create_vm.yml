@@ -98,4 +98,8 @@
       network_interfaces: "{{ name }}-nic"
       image: "{{ image }}"
 
-
+  - name: Pass variables to Workflows
+    set_stats:
+      data:
+        vm_name: "{{ name }}"
+        
