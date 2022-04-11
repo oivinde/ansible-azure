@@ -78,7 +78,6 @@
       subnet: default
       public_ip_name: "{{ name }}-pubip"
       security_group: "{{ resource_group }}-nsg"
-      register: nic
 
   - name: Create VM
     azure_rm_virtualmachine:
