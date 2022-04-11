@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   collections:
-    - azure.azcollection
+    - cloud.azure_roles
 
   vars:
     resource_group: demo
