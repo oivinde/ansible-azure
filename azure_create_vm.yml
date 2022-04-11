@@ -104,8 +104,8 @@
     with_items: "{{ vm.results }}"
 
   - name: Pass variables to Tower Workflows
-      set_stats:
-        data:
-          vm_name: "{{ name }}"
-          vm_size: "{{ vm_size }}"
+    set_stats:
+      data:
+        vm_name: "{{ name }}"
+        vm_size: "{{ vm_size }}"
 
