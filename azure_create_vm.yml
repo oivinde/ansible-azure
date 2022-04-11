@@ -1,18 +1,20 @@
 - name: Create Azure VM
   hosts: localhost
   connection: local
+  collections:
+    - azure.azcollection
+
   vars:
     resource_group: demo
     location: northeurope
     storage_type: Standard_LRS
     os_disk_type: StandardSSD_LRS
     vm_size: Standard_B1ms
-    admin_username: demouser
+    admin_username:
     ssh_pub_key:
-    image: rhel8-golden-image
-    vm_prefix: azure
-    num_vm: 1
-
+    image:
+    name: 
+  
   tasks:
   - name: Create the resource group
     azure_rm_resourcegroup:
@@ -36,9 +38,67 @@
     azure_rm_publicipaddress:
       resource_group: "{{ resource_group }}"
       allocation_method: Static
-      name: "{{ vm_prefix }}-ip"
+      name: "{{ name }}-ip"
     register: publicip
 
   - name: Show Public IP address
     debug:
-      msg: "{{ publicip }}"
+      msg: "The public IP is {{ publicip.state.ip_address }}."
+
+  - name: Create Network Security Group that allows SSH/Cockpit/MSSQL
+    azure_rm_securitygroup:
+      resource_group: "{{ resource_group }}"
+      name: "{{ resource_group }}-nsg"
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 1001
+          direction: Inbound
+        - name: Cockpit
+          protocol: Tcp
+          destination_port_range: 9090
+          access: Allow
+          priority: 1002
+          direction: Inbound
+        - name: MSSQL
+          protocol: Tcp
+          destination_port_range: 1433
+          access: Allow
+          priority: 1003
+          direction: Inbound
+
+  - name: Create virtual network interface card
+    azure_rm_networkinterface:
+      resource_group: "{{ resource_group }}"
+      name: "{{ name }}-nic"
+      virtual_network: "{{ resource_group }}-vnet"
+      subnet: default
+      public_ip_name: "{{ name }}-pubip"
+      security_group: "{{ resource_group }}-nsg"
+      register: nic
+
+  - name: Create VM
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: "{{ name }}"
+      vm_size: "{{ vm_size }}"
+      managed_disk_type: "{{ os_disk_type }}"
+      storage_account_name: "{{ storageaccount_name }}"
+      admin_username: "{{ admin_username }}"
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: "/home/{{ admin_username }}/.ssh/authorized_keys"
+          key_data: "{{ ssh_pub_key }}"
+      network_interfaces: "{{ name }}-nic"
+      image: "{{ image }}"
+
+  - name: "Check VM Created"
+    async_status:
+      jid: "{{ item.ansible_job_id }}"
+    register: vm_status
+    until: vm_status.finished
+    retries: 500
+    delay: 4
+    with_items: "{{ vm.results }}"
