@@ -73,6 +73,12 @@
           access: Allow
           priority: 1003
           direction: Inbound
+        - name: Grafana
+          protocol: Tcp
+          destination_port_range: 3000
+          access: Allow
+          priority: 1004
+          direction: Inbound
 
   - name: Create virtual network interface card
     azure_rm_networkinterface:
