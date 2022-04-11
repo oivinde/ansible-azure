@@ -17,6 +17,10 @@
     name: 
   
   tasks:
+  - name: try to set a unique storageaccount name
+    set_fact:
+      storageaccount_name: "{{ resource_group }}{{ 10000000 |random}}"
+
   - name: Create the resource group
     azure_rm_resourcegroup:
       name: "{{ resource_group }}"
