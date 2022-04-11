@@ -1,3 +1,4 @@
+---
 - name: Create Azure VM
   hosts: localhost
   connection: local
@@ -102,10 +103,4 @@
     retries: 500
     delay: 4
     with_items: "{{ vm.results }}"
-
-  - name: Pass variables to Tower Workflows
-    set_stats:
-      data:
-        name: "{{ name }}"
-        vm_size: "{{ vm_size }}"
 
