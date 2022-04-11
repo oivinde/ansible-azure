@@ -97,14 +97,5 @@
           key_data: "{{ ssh_pub_key }}"
       network_interfaces: "{{ name }}-nic"
       image: "{{ image }}"
-      register: vm
 
-  - name: "Check VM Created"
-    async_status:
-      jid: "{{ item.ansible_job_id }}"
-    register: vm_status
-    until: vm_status.finished
-    retries: 500
-    delay: 4
-    with_items: "{{ vm.results }}"
 
