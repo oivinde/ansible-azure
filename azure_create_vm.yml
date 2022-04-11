@@ -108,4 +108,4 @@
     set_stats:
       data:
         vm_name: "{{ name }}"
-        resource_pool: "{{ resource_pool }}"
+        resource_group: "{{ resource_group }}"
