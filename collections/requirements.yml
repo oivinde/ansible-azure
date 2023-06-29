@@ -1,5 +1,5 @@
 ---
 collections:
   - name: azure.azcollection
-    src: https://aap-ah.ekeberg.io/api/galaxy/content/rh-certified/
+    src: https://aap-pah.ekeberg.io/api/galaxy/content/rh-certified/
 
